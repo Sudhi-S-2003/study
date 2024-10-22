@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const businessRoutes = require('./routes/BusinessRoutes'); 
 const InstituteRoutes = require('./routes/InstituteRoutes');
+const AssetsRoutes = require('./routes/AssetsRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,7 +24,7 @@ mongoose.connect(mongoURI, {
 // Routes
 app.use('/api', businessRoutes);
 app.use('/api', InstituteRoutes);
-
+app.use("/assest",AssetsRoutes)
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
