@@ -1,0 +1,41 @@
+.leaflet-routing-alt {
+  display: flex;
+  flex-direction: column; /* Stack the tables vertically */
+  background: white; /* Background for visibility */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  z-index: 1000; /* Ensure it overlays above other elements */
+  padding: 10px; /* Inner padding */
+  right: 10px; /* Positioning */
+  gap: 10px; /* Space between tables */
+  width: 300px; /* Fixed width */
+}
+
+.routing-table {
+  max-height: 150px; /* Max height for each table */
+  overflow-y: auto; /* Enable vertical scrolling */
+  width: 100%; /* Full width of the container */
+}
+
+.leaflet-routing-alt table {
+  width: 100%; /* Make table take full width */
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+}
+
+.leaflet-routing-alt th,
+.leaflet-routing-alt td {
+  padding: 5px; /* Add padding for table cells */
+  border: 1px solid #ccc; /* Add borders for visibility */
+  text-align: left; /* Align text to the left */
+}
+
+.leaflet-routing-alt th {
+  background-color: #f4f4f4; /* Header background color */
+}
+
+.leaflet-routing-alt td {
+  max-width: 150px; /* Limit width for table cells */
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Add ellipsis for overflow */
+  overflow: hidden; /* Hide overflow */
+}
