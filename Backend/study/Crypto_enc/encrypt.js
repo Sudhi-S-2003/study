@@ -1,30 +1,34 @@
 const crypto = require('crypto');
 
-// Key and IV (Initialization Vector) generation
-const algorithm = 'aes-256-cbc';
-const key = crypto.randomBytes(32); // 32 bytes for AES-256
-const iv = crypto.randomBytes(16);  // 16 bytes for AES block size
+// Secret key for AES encryption (should be kept secure)
+const secretKey = '1234567890123456';  // 16 bytes for AES-128
+const iv = crypto.randomBytes(16);  // Initialization vector (IV) for AES encryption
 
 // Encrypt function
-function encrypt(text) {
-  const cipher = crypto.createCipheriv(algorithm, key, iv);
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return { iv: iv.toString('hex'), encryptedData: encrypted };
+function encryptData(plainText) {
+    const cipher = crypto.createCipheriv('aes-128-cbc', Buffer.from(secretKey), iv);
+    let encrypted = cipher.update(plainText, 'utf-8', 'hex');
+    encrypted += cipher.final('hex');
+    return { iv: iv.toString('hex'), encryptedData: encrypted };
 }
 
 // Decrypt function
-function decrypt(encryptedText) {
-  const decipher = crypto.createDecipheriv(algorithm, key, Buffer.from(encryptedText.iv, 'hex'));
-  let decrypted = decipher.update(encryptedText.encryptedData, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
+function decryptData(encryptedData, ivHex) {
+    const decipher = crypto.createDecipheriv('aes-128-cbc', Buffer.from(secretKey), Buffer.from(ivHex, 'hex'));
+    let decrypted = decipher.update(encryptedData, 'hex', 'utf-8');
+    decrypted += decipher.final('utf-8');
+    return decrypted;
 }
 
-// Example usage:
-const message = 'Hello, this is a secret message!';
-const encryptedMessage = encrypt(message);
-console.log('Encrypted:', encryptedMessage);
+// Example Usage
+const plainText = 'This is some sensitive data';
 
-const decryptedMessage = decrypt(encryptedMessage);
-console.log('Decrypted:', decryptedMessage);
+console.log('Plain Text:', plainText);
+
+// Encrypting the plain text
+const encrypted = encryptData(plainText);
+console.log('Encrypted Text:', encrypted);
+
+// Decrypting the data back
+const decrypted = decryptData(encrypted.encryptedData, encrypted.iv);
+console.log('Decrypted Text:', decrypted);
